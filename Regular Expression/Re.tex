@@ -1,0 +1,142 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{fullpage}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{lmodern}
+
+\definecolor{codeblue}{rgb}{0.25,0.5,0.75}
+\lstset{
+  language=Python,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{codeblue}\bfseries,
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  stepnumber=1,
+  numbersep=5pt,
+  frame=single,
+  breaklines=true,
+  columns=fullflexible,
+  keepspaces=true,
+  showspaces=false,
+  showstringspaces=false,
+  tabsize=4
+}
+
+\title{Tóm tắt về Thư viện \texttt{re} trong Python}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{Giới thiệu}
+Biểu thức chính quy (Regular Expression - RegEx) là một công cụ mạnh mẽ để tìm kiếm, trích xuất và thao tác chuỗi ký tự dựa trên các mẫu (pattern) nhất định. Trong Python, mô-đun \texttt{re} cung cấp các hàm để làm việc với RegEx, giúp lập trình viên xử lý văn bản hiệu quả hơn.
+
+\section*{Các ký tự đặc biệt trong RegEx}
+\begin{itemize}
+    \item \texttt{[]} - Khớp với bất kỳ ký tự nào trong dấu ngoặc vuông. Ví dụ: \texttt{[abc]} khớp với `a', `b' hoặc `c'.
+    \item \texttt{.} - Khớp với bất kỳ ký tự đơn nào ngoại trừ ký tự xuống dòng (\texttt{\textbackslash n}).
+    \item \texttt{\^{}} - Khớp với vị trí bắt đầu của chuỗi.
+    \item \texttt{\$} - Khớp với vị trí kết thúc của chuỗi.
+    \item \texttt{*} - Khớp với 0 hoặc nhiều lần lặp lại của mẫu trước đó.
+    \item \texttt{+} - Khớp với 1 hoặc nhiều lần lặp lại của mẫu trước đó.
+    \item \texttt{?} - Khớp với 0 hoặc 1 lần lặp lại của mẫu trước đó.
+    \item \texttt{\{\}} - Khớp với số lần lặp lại xác định của mẫu trước đó. Ví dụ: \texttt{a\{2\}} khớp với `aa'.
+    \item \texttt{()} - Nhóm các mẫu lại với nhau.
+    \item \texttt{|} - Toán tử OR. Ví dụ: \texttt{a|b} khớp với `a' hoặc `b'.
+    \item \texttt{\textbackslash} - Ký tự thoát, dùng để khớp với các ký tự đặc biệt hoặc biểu diễn các mẫu đặc biệt như:
+    \begin{itemize}
+        \item \texttt{\textbackslash d} - Khớp với chữ số (0--9).
+        \item \texttt{\textbackslash D} - Khớp với bất kỳ ký tự nào không phải chữ số.
+        \item \texttt{\textbackslash s} - Khớp với khoảng trắng.
+        \item \texttt{\textbackslash S} - Khớp với bất kỳ ký tự nào không phải khoảng trắng.
+        \item \texttt{\textbackslash w} - Khớp với chữ cái hoặc chữ số (a--z, A--Z, 0--9, \_).
+        \item \texttt{\textbackslash W} - Khớp với ký tự không phải chữ cái hoặc chữ số.
+    \end{itemize}
+\end{itemize}
+
+\section*{Các hàm chính trong mô-đun \texttt{re}}
+\begin{itemize}
+    \item \texttt{re.match(pattern, string)} - Kiểm tra xem phần đầu của chuỗi có khớp với mẫu hay không.
+    \item \texttt{re.search(pattern, string)} - Tìm kiếm chuỗi để tìm vị trí đầu tiên mà mẫu khớp.
+    \item \texttt{re.findall(pattern, string)} - Tìm tất cả các đoạn trong chuỗi khớp với mẫu và trả về dưới dạng danh sách.
+    \item \texttt{re.split(pattern, string)} - Tách chuỗi dựa trên mẫu và trả về danh sách các phần.
+    \item \texttt{re.sub(pattern, repl, string)} - Thay thế tất cả các đoạn khớp với mẫu bằng chuỗi thay thế.
+    \item \texttt{re.compile(pattern)} - Tiền biên dịch mẫu để sử dụng nhiều lần mà không cần phân tích lại.
+\end{itemize}
+
+\section*{Cờ trong RegEx}
+\begin{itemize}
+    \item \texttt{re.IGNORECASE} hoặc \texttt{re.I} - Không phân biệt chữ hoa chữ thường.
+    \item \texttt{re.MULTILINE} hoặc \texttt{re.M} - Xử lý chuỗi nhiều dòng, cho phép \texttt{\^{}} và \texttt{\$} áp dụng cho từng dòng.
+    \item \texttt{re.DOTALL} hoặc \texttt{re.S} - Cho phép ký tự \texttt{.} khớp với xuống dòng.
+    \item \texttt{re.VERBOSE} hoặc \texttt{re.X} - Cho phép viết RegEx trên nhiều dòng với chú thích.
+\end{itemize}
+
+\section*{Ví dụ minh họa}
+\subsection*{Kiểm tra chuỗi có bắt đầu bằng một ký tự cụ thể không}
+\begin{lstlisting}
+import re
+
+pattern = '^a...s$'
+test_string = 'abyss'
+result = re.match(pattern, test_string)
+
+if result:
+    print("Tìm kiếm thành công.")
+else:
+    print("Tìm kiếm không thành công.")
+\end{lstlisting}
+
+\subsection*{Tìm tất cả số trong một chuỗi}
+\begin{lstlisting}
+import re
+
+text = "Số điện thoại: 0987654321, 12345, 67890"
+numbers = re.findall(r'\d+', text)
+
+print(numbers)  # Output: ['0987654321', '12345', '67890']
+\end{lstlisting}
+
+\subsection*{Thay thế ký tự trong chuỗi}
+\begin{lstlisting}
+import re
+
+text = "Xin chào Python!"
+new_text = re.sub(r'Python', 'Java', text)
+
+print(new_text)  # Output: "Xin chào Java!"
+\end{lstlisting}
+
+\subsection*{Tách chuỗi bằng nhiều dấu phân cách}
+\begin{lstlisting}
+import re
+
+text = "apple;orange,banana|grape"
+fruits = re.split(r'[;,|]', text)
+
+print(fruits)  # Output: ['apple', 'orange', 'banana', 'grape']
+\end{lstlisting}
+
+\section*{Ứng dụng thực tế của RegEx}
+\begin{itemize}
+    \item Kiểm tra định dạng email: \verb|r'^[a-zA-Z0-9\_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'|
+    \item Xác thực số điện thoại: \verb|r'^\+?[0-9]{9,15}$'|
+    \item Trích xuất URL từ văn bản: \verb|r'https?://(?:[-\w.]|(?:\%[\da-fA-F]{2}))+'|
+    \item Phát hiện địa chỉ IP: \verb|r'\b(?:\d{1,3}\.){3}\d{1,3}\b'|
+\end{itemize}
+
+\section*{Kết luận}
+Thư viện \texttt{re} trong Python là một công cụ mạnh mẽ để thao tác chuỗi dựa trên biểu thức chính quy. Việc nắm vững các ký tự đặc biệt, các phương thức chính và ứng dụng thực tế của RegEx sẽ giúp lập trình viên xử lý dữ liệu văn bản hiệu quả hơn.
+
+\end{document}
