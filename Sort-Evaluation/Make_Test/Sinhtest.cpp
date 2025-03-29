@@ -22,7 +22,7 @@ void make_test(int i){
 
     vector<ll> a;
     for(int i = 1; i <= 1e6; i++){
-        int z = Rand(-1e6, 1e6);
+        ll z = Rand(-1e6, 1e6);
 
         a.push_back(z);
     }
